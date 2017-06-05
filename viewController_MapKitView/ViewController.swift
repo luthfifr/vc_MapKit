@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController, MKMapViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
     @available(iOS 2.0, *)
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -24,9 +24,12 @@ class ViewController: UIViewController, MKMapViewDelegate, UIPickerViewDataSourc
     let mapType_Picker = UIPickerView()
     let mapType_data = ["Standard", "Satellite", "Hybrid"]
     let toolBar = UIToolbar()
+    var lokasiAwal: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.delegate = self
         
         checkLocationAuthorizationStatus()
         mapView.showsPointsOfInterest = true
@@ -35,9 +38,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UIPickerViewDataSourc
         
         btn_mapType.backgroundColor = UIColor.white
         btn_mapType.setTitle(mapType_data[mapView.mapType.hashValue], for: .normal)
-        
-        let lokasiAwal = CLLocation(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!) //bandung, indonesia: -6.914744, 107.609810
-        centerOnlocation(lokasiAwal, 1000) //radius dalam satuan meter
         
         mapView.delegate = self
         
@@ -104,10 +104,15 @@ class ViewController: UIViewController, MKMapViewDelegate, UIPickerViewDataSourc
     }
     
     func checkLocationAuthorizationStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways {
             mapView.showsUserLocation = true
-        } else {
+            lokasiAwal = CLLocation(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!)
+            centerOnlocation(lokasiAwal!, 1000) //radius dalam satuan meter
+        } else if CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager.requestWhenInUseAuthorization()
+        } else if CLLocationManager.authorizationStatus() == .denied || CLLocationManager.authorizationStatus() == .restricted {
+            lokasiAwal = CLLocation(latitude: 37.33182, longitude: -122.03118) //dummy location: Apple Campus, Cupertino
+            centerOnlocation(lokasiAwal!, 1000)
         }
     }
 
