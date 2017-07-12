@@ -14,6 +14,7 @@
 		CF79BD721ED7E5B8007156AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF79BD701ED7E5B8007156AC /* LaunchScreen.storyboard */; };
 		CF79BD7D1ED7E5B8007156AC /* viewController_MapKitViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF79BD7C1ED7E5B8007156AC /* viewController_MapKitViewTests.swift */; };
 		CF79BD881ED7E5B8007156AC /* viewController_MapKitViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF79BD871ED7E5B8007156AC /* viewController_MapKitViewUITests.swift */; };
+		CF9B1DE61F15FEB1000BEFED /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF9B1DE51F15FEB1000BEFED /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		CF79BD831ED7E5B8007156AC /* viewController_MapKitViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = viewController_MapKitViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF79BD871ED7E5B8007156AC /* viewController_MapKitViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewController_MapKitViewUITests.swift; sourceTree = "<group>"; };
 		CF79BD891ED7E5B8007156AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CF9B1DE51F15FEB1000BEFED /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF9B1DE61F15FEB1000BEFED /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +84,7 @@
 				CF79BD7B1ED7E5B8007156AC /* viewController_MapKitViewTests */,
 				CF79BD861ED7E5B8007156AC /* viewController_MapKitViewUITests */,
 				CF79BD651ED7E5B8007156AC /* Products */,
+				CF9B1DE41F15FEB1000BEFED /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,6 +127,14 @@
 				CF79BD891ED7E5B8007156AC /* Info.plist */,
 			);
 			path = viewController_MapKitViewUITests;
+			sourceTree = "<group>";
+		};
+		CF9B1DE41F15FEB1000BEFED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CF9B1DE51F15FEB1000BEFED /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +209,9 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
 								enabled = 1;
 							};
 						};
