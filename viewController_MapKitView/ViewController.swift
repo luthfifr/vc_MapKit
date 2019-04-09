@@ -51,9 +51,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         toolBar.isTranslucent = true
         toolBar.tintColor = UIColor(red: 0/255, green: 122/255, blue: 255/255, alpha: 1)
         toolBar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ViewController.donePicker))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ViewController.cancelPicker))
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.plain, target: self, action: #selector(ViewController.donePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: self, action: #selector(ViewController.cancelPicker))
         
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
@@ -91,14 +91,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         return nil
     }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
         
         let anotasi = view.annotation as! MKPointAnnotation
         anotasi.title = "\((view.annotation?.coordinate.latitude)!), \((view.annotation?.coordinate.longitude)!)"
     }
     
     func centerOnlocation(_ location: CLLocation, _ regionRadius: Double){
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2.0, regionRadius * 2.0)
+        let coordinateRegion = MKCoordinateRegion.init(center: location.coordinate, latitudinalMeters: regionRadius * 2.0, longitudinalMeters: regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
     
     }
@@ -120,7 +120,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         mapType_Picker.isHidden = false
         toolBar.isHidden = false
         mapType_Picker.selectRow(mapType_Picker.selectedRow(inComponent: 0), inComponent: 0, animated: true)
-        view.bringSubview(toFront: mapType_Picker)
+        view.bringSubviewToFront(mapType_Picker)
     }
     
     //UIPickerViewDelegate & UIPickerViewDataSource
@@ -136,7 +136,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         return mapType_data[row]
     }
     
-    func donePicker()
+    @objc func donePicker()
     {
         let row = mapType_Picker.selectedRow(inComponent: 0)
         mapView.mapType = MKMapType(rawValue: UInt(row))!
@@ -146,13 +146,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         toolBar.isHidden = true
     }
     
-    func cancelPicker(){
+    @objc func cancelPicker(){
         self.view.endEditing(true)
         mapType_Picker.isHidden = true
         toolBar.isHidden = true
     }
     
-    func handleTap(gestureReconizer: UILongPressGestureRecognizer) {
+    @objc func handleTap(gestureReconizer: UILongPressGestureRecognizer) {
         
         let lokasiTap = gestureReconizer.location(in: mapView)
         let koordinatTap = mapView.convert(lokasiTap,toCoordinateFrom: mapView)
